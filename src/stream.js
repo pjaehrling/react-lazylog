@@ -5,7 +5,7 @@ import { convertBufferToLines, bufferConcat } from './utils';
 const fetcher = Promise.resolve().then(() =>
   'ReadableStream' in self && 'body' in self.Response.prototype
     ? self.fetch
-    : import('@mattiasbuelens/web-streams-polyfill/ponyfill').then(
+    : import('@mattiasbuelens/web-streams-polyfill/dist/polyfill.mjs').then(
         ({ ReadableStream }) => {
           self.ReadableStream = ReadableStream;
 

@@ -230,16 +230,14 @@ export default class LazyLog extends Component {
       url: previousUrl,
       text: previousText,
       highlight: previousHighlight,
-      isSearching,
-      scrollToIndex,
     }
   ) {
-    const newScrollToIndex = isSearching
-      ? scrollToIndex
-      : getScrollIndex({ follow, scrollToLine, count, offset });
     const shouldUpdate =
       (nextUrl && nextUrl !== previousUrl) ||
       (nextText && nextText !== previousText);
+    const newScrollToIndex = shouldUpdate
+      ? 0
+      : getScrollIndex({ follow, scrollToLine, count, offset });
 
     return {
       scrollToIndex: newScrollToIndex,
@@ -256,6 +254,13 @@ export default class LazyLog extends Component {
             offset: 0,
             loaded: false,
             error: null,
+            // clear Search
+            isSearching: false,
+            searchKeywords: '',
+            resultLines: [],
+            filteredLines: List(),
+            resultLineUniqueIndexes: [],
+            isFilteringLinesWithMatches: false,
           }
         : null),
     };

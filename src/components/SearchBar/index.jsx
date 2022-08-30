@@ -61,6 +61,7 @@ export default class SearchBar extends Component {
     const { value: keywords } = e.target;
 
     this.setState({ keywords }, () => this.search());
+    this.props.onFilterLinesWithMatches(false);
   };
 
   handleSearchKeyPress = e => {

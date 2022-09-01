@@ -59,9 +59,12 @@ typings/
 
 # build directory
 lib
-build
 styleguide
 es5
+
+# build 
+# INFO: Until we need versioning on builds and a package artifact registry,
+# we will just push the build files, yarn will pick them up without the need to rebuild
 
 # Webstorm project specific settings
 .idea/

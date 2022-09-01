@@ -4,6 +4,30 @@ React component that loads and views remote text in the browser lazily and effic
 
 See the demo on the styleguide at https://mozilla-frontend-infra.github.io/react-lazylog
 
+## Building a new version for RoboticsPlus
+
+For now, we just push the latest build (using `yarn build`) to bitbucket.
+The `build` folder is listed under `files` in the [package.json](package.json) and get's picked up by Yarn.
+
+React Lazylog uses [Neutrino](https://neutrino.js.org) for developing, previewing, and building React components.
+Which has further dependencies `imagemin-pngquant` --> `pngquant-bin`. That last one needs (`libpng-dev` in particular `libpng12-0`) installed.
+To successfully run `yarn build` you most probably have to install it.
+
+```
+# if add-apt-repository is not installed
+sudo apt install software-properties-common
+
+# install libpng12-0 under linux
+sudo add-apt-repository ppa:linuxuprising/libpng12 -y
+sudo apt update
+sudo apt install libpng12-0
+```
+
+### Ideas for the future
+
+- In case we need different packaged/build versions available at the same time, we should consider a private registry on [NPM](https://www.npmjs.com) or [Cloudsmith](https://cloudsmith.com/).
+- Automate the build process using Bitbucket Pipelines, with a docker image that has all the dependencies (e.g. `libpng12-0`) installed.
+
 ## Features
 
 - Efficient scrolling performance thanks to [react-virtualized](https://github.com/bvaughn/react-virtualized)
@@ -32,10 +56,10 @@ The core component from react-lazylog is `LazyLog`. There is also a higher-order
 following logs until scroll. This module can be required via ES imports, CommonJS require, or UMD.
 
 ```js
-import { LazyLog } from 'react-lazylog';
+import { LazyLog } from "react-lazylog";
 
 // using require
-const { LazyLog } = require('react-lazylog');
+const { LazyLog } = require("react-lazylog");
 ```
 
 ## `<LazyLog />`
@@ -45,13 +69,11 @@ const { LazyLog } = require('react-lazylog');
 After importing a component, it can be rendered with the required `url` prop:
 
 ```jsx
-import React from 'react';
-import { render } from 'react-dom';
-import { LazyLog } from 'react-lazylog';
+import React from "react";
+import { render } from "react-dom";
+import { LazyLog } from "react-lazylog";
 
-render((
-  <LazyLog url="http://example.log" />
-), document.getElementById('root'));
+render(<LazyLog url="http://example.log" />, document.getElementById("root"));
 ```
 
 By default the `LazyLog` will expand to fill its container, so ensure this container has valid dimensions and layout.
@@ -69,12 +91,12 @@ In addition to the props listed for `LazyLog`, most of the properties available 
 [react-virtualized List](https://github.com/bvaughn/react-virtualized/blob/master/docs/List.md)
 can be provided and will be passed through to the component. _Here are a few useful props:_
 
-| Property | Type | Required? | Description |
-|:---|:---|:---:|:---|
-| `rowHeight` | Number |  | A fixed row height in pixels. Controls how tall a line is, as well as the `lineHeight` style of the line's text. Defaults to `19`. |
-| `overscanRowCount` | Number |  | Number of rows to render above/below the visible bounds of the list. This can help reduce flickering during scrolling on certain browsers/devices. Defaults to `100`. |
-| `scrollToAlignment` | String |  | Controls the alignment of scrolled-to-rows. The default (`'auto'`) scrolls the least amount possible to ensure that the specified row is fully visible. Use `'start'` to always align rows to the top of the list and `'end'` to align them bottom. Use `'center'` to align them in the middle of container. |
-| `onScroll` | Function |  | Callback invoked whenever the scroll offset changes within the inner scrollable region: `({ clientHeight: number, scrollHeight: number, scrollTop: number }): void` |
+| Property            | Type     | Required? | Description                                                                                                                                                                                                                                                                                                  |
+| :------------------ | :------- | :-------: | :----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `rowHeight`         | Number   |           | A fixed row height in pixels. Controls how tall a line is, as well as the `lineHeight` style of the line's text. Defaults to `19`.                                                                                                                                                                           |
+| `overscanRowCount`  | Number   |           | Number of rows to render above/below the visible bounds of the list. This can help reduce flickering during scrolling on certain browsers/devices. Defaults to `100`.                                                                                                                                        |
+| `scrollToAlignment` | String   |           | Controls the alignment of scrolled-to-rows. The default (`'auto'`) scrolls the least amount possible to ensure that the specified row is fully visible. Use `'start'` to always align rows to the top of the list and `'end'` to align them bottom. Use `'center'` to align them in the middle of container. |
+| `onScroll`          | Function |           | Callback invoked whenever the scroll offset changes within the inner scrollable region: `({ clientHeight: number, scrollHeight: number, scrollTop: number }): void`                                                                                                                                          |
 
 ## `<ScrollFollow />`
 
@@ -87,18 +109,24 @@ The `ScrollFollow` component accepts a render prop function which should return 
 function's arguments.
 
 ```jsx
-import React from 'react';
-import { render } from 'react-dom';
-import { LazyLog, ScrollFollow } from 'react-lazylog';
+import React from "react";
+import { render } from "react-dom";
+import { LazyLog, ScrollFollow } from "react-lazylog";
 
-render((
+render(
   <ScrollFollow
     startFollowing={true}
     render={({ follow, onScroll }) => (
-      <LazyLog url="http://example.log" stream follow={follow} onScroll={onScroll} />
+      <LazyLog
+        url="http://example.log"
+        stream
+        follow={follow}
+        onScroll={onScroll}
+      />
     )}
-  />
-), document.getElementById('root'));
+  />,
+  document.getElementById("root")
+);
 ```
 
 ## Styling
@@ -118,11 +146,11 @@ For many react-logviewer components, continually passing varied styling objects 
 override the `defaultProps.style` of any desired component to override styles of that component. For example:
 
 ```jsx
-import Line from 'react-lazylog/build/Line';
+import Line from "react-lazylog/build/Line";
 
 // Use defaultProps.style to set the style for an internal component
 Line.defaultProps.style = {
-  color: 'green'
+  color: "green",
 };
 ```
 
@@ -182,7 +210,7 @@ for developing, previewing, and building React components. To get started:
 - Fork and clone this repo.
 - Install the dependencies with `yarn`.
 - Start the development server with `yarn start`. This will launch a styleguide instance.
-Open a browser to http://localhost:6060 to preview the React components.
+  Open a browser to http://localhost:6060 to preview the React components.
 - Use CTRL-C to exit the styleguide.
 - Use `yarn build` to generate the compiled component for publishing to npm.
 

@@ -1,13 +1,15 @@
 {
-  "name": "react-lazylog",
-  "version": "4.5.3",
+  "name": "@pjaehrling/react-lazylog",
+  "repository": "git://github.com/pjaehrling/react-lazylog.git",
+  "publishConfig": {
+    "registry":"https://npm.pkg.github.com/pjaehrling"
+  },
+  "version": "4.5.4",
   "description": "React Lazy Logviewer",
   "license": "MPL-2.0",
-  "repository": "mozilla-frontend-infra/react-lazylog",
   "main": "build/index.js",
   "files": [
-    "build",
-    "src"
+    "build/*"
   ],
   "keywords": [
     "react",
@@ -21,9 +23,7 @@
     "build": "neutrino build",
     "prepare": "neutrino build",
     "lint": "neutrino lint",
-    "start": "neutrino styleguide:start",
-    "precommit": "neutrino stage",
-    "deploy": "neutrino styleguide:build && gh-pages --remote upstream -d styleguide"
+    "start": "neutrino styleguide:start"
   },
   "devDependencies": {
     "babel-polyfill": "^6.26.0",

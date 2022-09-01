@@ -6,9 +6,6 @@ See the demo on the styleguide at https://mozilla-frontend-infra.github.io/react
 
 ## Building a new version for RoboticsPlus
 
-For now, we just push the latest build (using `yarn build`) to bitbucket.
-The `build` folder is listed under `files` in the [package.json](package.json) and get's picked up by Yarn.
-
 React Lazylog uses [Neutrino](https://neutrino.js.org) for developing, previewing, and building React components.
 Which has further dependencies `imagemin-pngquant` --> `pngquant-bin`. That last one needs (`libpng-dev` in particular `libpng12-0`) installed.
 To successfully run `yarn build` you most probably have to install it.
@@ -25,8 +22,7 @@ sudo apt install libpng12-0
 
 ### Ideas for the future
 
-- In case we need different packaged/build versions available at the same time, we should consider a private registry on [NPM](https://www.npmjs.com) or [Cloudsmith](https://cloudsmith.com/).
-- Automate the build process using Bitbucket Pipelines, with a docker image that has all the dependencies (e.g. `libpng12-0`) installed.
+- Automate the build process, with a docker image that has all the dependencies (e.g. `libpng12-0`) installed
 
 ## Features
 

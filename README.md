@@ -20,6 +20,24 @@ sudo apt update
 sudo apt install libpng12-0
 ```
 
+When the build is done, you can release a new version to Github Packages Registry. Steps:
+
+- `npm login --registry=https://npm.pkg.github.com`
+
+(promots for Username, Password/Token and Email - Check Keeper for those)
+
+- `npm publish` (make sure to bump version number before)
+
+To use in consuming repo add `.npmrc`
+
+```
+registry=https://registry.yarnpkg.com/
+
+@<username>:registry=https://npm.pkg.github.com
+//npm.pkg.github.com/:_authToken=<token>
+always-auth=true
+```
+
 ### Ideas for the future
 
 - Automate the build process, with a docker image that has all the dependencies (e.g. `libpng12-0`) installed
